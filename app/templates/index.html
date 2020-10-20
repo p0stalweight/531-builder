@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Please enter your training maxes below</h2>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.press_max.label }}<br>
+            {{ form.press_max(size=32) }}
+            {% for error in form.press_max.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.deadlift_max.label }}<br>
+            {{ form.deadlift_max(size=32) }}
+            {% for error in form.deadlift_max.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.bench_max.label }}<br>
+            {{ form.bench_max(size=32) }}
+            {% for error in form.bench_max.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.squat_max.label }}<br>
+            {{ form.squat_max(size=32) }}
+            {% for error in form.squat_max.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

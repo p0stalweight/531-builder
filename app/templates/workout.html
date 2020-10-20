@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">Week 1</div>
+        <div class="col-sm-3">Week 2</div>
+        <div class="col-sm-3">Week 3</div>
+        <div class="col-sm-3">Week 4</div>
+    </div>
+    
+    <hr>
+
+    <div class="row">
+        <div style="margin-top:5px" id="press"></div> 
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div  style="margin-top:5px" id="deadlift"></div> 
+    </div>
+
+    <hr>
+
+    <div style="margin-top:5px" class="row">
+        <div id="bench"></div> 
+    </div>
+
+    <hr>
+
+    <div style="margin-top:5px" class="row">
+        <div id="squat"></div> 
+    </div>
+   
+</div>
+
+
+    <script>
+        
+        var workOut = {{ workout|tojson }}; 
+
+        const lifts = ["press", "deadlift", "bench", "squat"];
+
+        document.addEventListener('DOMContentLoaded', function(){
+            
+            constructWorkout();
+
+        });
+
+        function constructWorkout(){
+            
+            for (let i = 0; i < lifts.length; i++){
+
+                addLift(lifts[i]);
+
+            }   
+
+        }
+
+        function addLift(lift){
+            buildWarmup(lift);
+            buildMainSets(lift);
+
+        }
+
+        function buildWarmup(lift){
+
+            let liftName = lift;
+            let curRow = document.createElement("DIV"); 
+            let rowID = liftName + name;
+            liftIDName = '#' + liftName;
+
+            curRow.setAttribute("id", rowID);
+            
+            rowID = '#' + rowID;
+            document.querySelector(liftIDName).appendChild(curRow);
+
+            // Add names of lift to each day
+            for(let i = 0; i < 4; i++){
+                
+                let liftData = document.createElement("DIV");
+                liftData.setAttribute("class", "col-sm-3");
+                let columnID = lift + i;
+                liftData.setAttribute("id", columnID);
+
+                liftData.innerHTML = lift[0].toUpperCase() + lift.slice(1); 
+
+                document.querySelector(rowID).appendChild(liftData); 
+
+            }
+
+            // Create 1st warmup set
+            createSet(lift, "warmup_deload", 0, liftIDName, "5"); 
+
+            // Create 2nd warmup set
+            createSet(lift, "warmup_deload", 1, liftIDName, "5")
+
+            // Create 3rd warmup set
+            createSet(lift, "warmup_deload", 2, liftIDName, "3")
+        }
+
+        function buildMainSets(lift){
+            liftIDName = '#' + liftName;
+
+            // Create 1st set of the day
+            createMainSet(lift, "week1", 0, liftIDName, "5", 0)
+            createMainSet(lift, "week2", 0, liftIDName, "5", 1)
+            createMainSet(lift, "week3", 0, liftIDName, "5+", 2)
+
+            // Create 2nd set of day
+            createMainSet(lift, "week1", 1, liftIDName, "3", 0)
+            createMainSet(lift, "week2", 1, liftIDName, "3", 1)
+            createMainSet(lift, "week3", 1, liftIDName, "3+", 2)
+
+            // Create 3rd set of day
+            createMainSet(lift, "week1", 2, liftIDName, "5", 0)
+            createMainSet(lift, "week2", 2, liftIDName, "3", 1)
+            createMainSet(lift, "week3", 2, liftIDName, "1+", 2)
+        }
+
+        function createSet(currLift, currWeek, setID, liftID, reps){
+
+            console.log("top of createSet")
+            for(let i = 0; i < 4; i++){
+
+                let liftData = document.createElement("DIV");
+
+                let columnID = '#' + currLift + i;
+                console.log(columnID);
+
+                liftData.innerHTML = workOut[currLift][currWeek][setID] + " x " + reps; 
+                document.querySelector(columnID).appendChild(liftData);
+
+
+                console.log("post createSet querySelector")
+
+            }
+        }
+
+        function createMainSet(currLift, currWeek, setID, liftID, reps, col){
+
+            let columnID = '#' + currLift + setID;
+            let liftData = document.createElement("DIV");
+            liftData.innerHTML = workOut[currLift][currWeek][setID] + " x " + reps; 
+            document.querySelector(columnID).appendChild(liftData);
+
+        }
+
+
+    </script>
+
+{% endblock %}

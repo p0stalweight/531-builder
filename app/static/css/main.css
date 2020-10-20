@@ -1,0 +1,28 @@
+body {
+    margin: 20;
+    padding: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+table {
+    border: 1px solid black;
+    width: 50%;
+    text-align: left;
+    table-layout: fixed;
+}
+
+tr{
+    border: 1px solid black;
+    text-align: left;
+    width: "25%";
+}
+
+th{
+    text-align: left;
+}
+
+td{
+    text-align: left;
+    border: 1px solid black;
+    width: "25%";
+}
